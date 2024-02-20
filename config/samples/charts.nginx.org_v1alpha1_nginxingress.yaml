@@ -19,8 +19,8 @@ spec:
   resources: {}
   service:
     nodePorts:
-      http: "30080"
-      https: "30443"
+      http: "30077"
+      https: "30088"
     type: NodePort
   tolerations: []
   
