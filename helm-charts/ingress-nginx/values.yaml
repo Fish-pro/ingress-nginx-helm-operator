@@ -10,7 +10,7 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: "v0.49.3"
 
-ingressClass: "nginx"
+ingressClass: "ingress1"
 
 imagePullSecrets: []
 nameOverride: ""

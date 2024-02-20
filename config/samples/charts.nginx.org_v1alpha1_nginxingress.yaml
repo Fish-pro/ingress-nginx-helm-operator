@@ -11,7 +11,7 @@ spec:
     repository: k8s.gcr.io/ingress-nginx/controller
     tag: v0.49.3
   imagePullSecrets: []
-  ingressClass: nginx
+  ingressClass: ingress1
   nameOverride: ""
   nodeSelector: {}
   podAnnotations: {}
