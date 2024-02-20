@@ -25,5 +25,5 @@ webhooks:
     clientConfig:
       service:
         namespace: {{ .Release.Namespace }}
-        name: {{ include "ingress-nginx.name" . }}-controller-admission
+        name: {{ include "ingress-nginx.name" . }}-admission
         path: /networking/v1beta1/ingresses
