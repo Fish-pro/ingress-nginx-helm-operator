@@ -83,7 +83,7 @@ kind: Role
 metadata:
   labels:
     {{- include "ingress-nginx.labels" . | nindent 4 }}
-  name: {{ include "ingress-nginx.name" . }}
+  name: {{ include "ingress-nginx.name" . }}-admission
   namespace: {{ .Release.Namespace }}
 rules:
   - apiGroups:
