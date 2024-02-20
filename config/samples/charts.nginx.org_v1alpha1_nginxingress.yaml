@@ -1,7 +1,7 @@
 apiVersion: charts.nginx.org.nginx.io/v1alpha1
 kind: NginxIngress
 metadata:
-  name: ingress-nginx
+  name: nginxingress-sample
 spec:
   # Default values copied from <project_dir>/helm-charts/ingress-nginx/values.yaml
   affinity: {}
@@ -11,6 +11,8 @@ spec:
     repository: k8s.gcr.io/ingress-nginx/controller
     tag: v0.49.3
   imagePullSecrets: []
+  ingressClass:
+    name: nginx
   nameOverride: ""
   nodeSelector: {}
   podAnnotations: {}
