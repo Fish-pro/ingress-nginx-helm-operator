@@ -48,28 +48,16 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "rbac.authorization.k8s.io"
-  resources:
-  - "clusterrolebindings"
-  - "clusterroles"
-- verbs:
-  - "*"
-  apiGroups:
   - "admissionregistration.k8s.io"
   resources:
   - "validatingwebhookconfigurations"
 - verbs:
   - "*"
   apiGroups:
-  - "apps"
+  - "rbac.authorization.k8s.io"
   resources:
-  - "deployments"
-- verbs:
-  - "*"
-  apiGroups:
-  - "batch"
-  resources:
-  - "jobs"
+  - "clusterrolebindings"
+  - "clusterroles"
 - verbs:
   - "*"
   apiGroups:
@@ -85,5 +73,17 @@ rules:
   resources:
   - "rolebindings"
   - "roles"
+- verbs:
+  - "*"
+  apiGroups:
+  - "apps"
+  resources:
+  - "deployments"
+- verbs:
+  - "*"
+  apiGroups:
+  - "batch"
+  resources:
+  - "jobs"
 
 #+kubebuilder:scaffold:rules
