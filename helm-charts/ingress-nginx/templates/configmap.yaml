@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   labels:
     {{- include "ingress-nginx.labels" . | nindent 4 }}
-  name: {{ include "ingress-nginx.name" . }}-controller
+  name: {{ .Release.Name }}-controller
   namespace: {{ .Release.Namespace }}
 data:
   allow-snippet-annotations: 'true'

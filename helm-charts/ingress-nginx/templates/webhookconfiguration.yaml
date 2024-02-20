@@ -3,7 +3,7 @@ kind: ValidatingWebhookConfiguration
 metadata:
   labels:
     {{- include "ingress-nginx.labels" . | nindent 4 }}
-  name: {{ include "ingress-nginx.name" . }}-admission
+  name: {{ .Release.Name }}-admission
 webhooks:
   - name: validate.nginx.ingress.kubernetes.io
     matchPolicy: Equivalent
@@ -25,5 +25,5 @@ webhooks:
     clientConfig:
       service:
         namespace: {{ .Release.Namespace }}
-        name: {{ include "ingress-nginx.name" . }}-admission
+        name: {{ .Release.Name }}-admission
         path: /networking/v1beta1/ingresses

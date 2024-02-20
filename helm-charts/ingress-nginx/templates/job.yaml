@@ -1,17 +1,17 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "ingress-nginx.name" . }}-admission-create
+  name: {{ .Release.Name }}-admission-create
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "ingress-nginx.labels" . | nindent 4 }}
 spec:
   template:
     metadata:
-      name: {{ include "ingress-nginx.name" . }}-admission-create
+      name: {{ .Release.Name }}-admission-create
       labels:
-        app.kubernetes.io/name: {{ include "ingress-nginx.name" . }}
-        app.kubernetes.io/instance: {{ include "ingress-nginx.name" . }}
+        app.kubernetes.io/name: {{ .Release.Name }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
       containers:
         - name: create
@@ -19,16 +19,16 @@ spec:
           imagePullPolicy: IfNotPresent
           args:
             - create
-            - --host=ingress-nginx-controller-admission,{{ include "ingress-nginx.name" . }}-admission.$(POD_NAMESPACE).svc
+            - --host=ingress-nginx-controller-admission,{{ .Release.Name }}-admission.$(POD_NAMESPACE).svc
             - --namespace=$(POD_NAMESPACE)
-            - --secret-name={{ include "ingress-nginx.name" . }}-admission
+            - --secret-name={{ .Release.Name }}-admission
           env:
             - name: POD_NAMESPACE
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
       restartPolicy: OnFailure
-      serviceAccountName: {{ include "ingress-nginx.name" . }}-admission
+      serviceAccountName: {{ .Release.Name }}-admission
       nodeSelector:
         kubernetes.io/os: linux
       securityContext:
@@ -38,17 +38,17 @@ spec:
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "ingress-nginx.name" . }}-admission-patch
+  name: {{ .Release.Name }}-admission-patch
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "ingress-nginx.labels" . | nindent 4 }}
 spec:
   template:
     metadata:
-      name: {{ include "ingress-nginx.name" . }}-admission-patch
+      name: {{ .Release.Name }}-admission-patch
       labels:
-        app.kubernetes.io/name: {{ include "ingress-nginx.name" . }}
-        app.kubernetes.io/instance: {{ include "ingress-nginx.name" . }}
+        app.kubernetes.io/name: {{ .Release.Name }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
       containers:
         - name: patch
@@ -56,10 +56,10 @@ spec:
           imagePullPolicy: IfNotPresent
           args:
             - patch
-            - --webhook-name={{ include "ingress-nginx.name" . }}-admission
+            - --webhook-name={{ .Release.Name }}-admission
             - --namespace=$(POD_NAMESPACE)
             - --patch-mutating=false
-            - --secret-name={{ include "ingress-nginx.name" . }}-admission
+            - --secret-name={{ .Release.Name }}-admission
             - --patch-failure-policy=Fail
           env:
             - name: POD_NAMESPACE
@@ -67,7 +67,7 @@ spec:
                 fieldRef:
                   fieldPath: metadata.namespace
       restartPolicy: OnFailure
-      serviceAccountName: {{ include "ingress-nginx.name" . }}-admission
+      serviceAccountName: {{ .Release.Name }}-admission
       nodeSelector:
         kubernetes.io/os: linux
       securityContext:
