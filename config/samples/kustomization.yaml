@@ -1,0 +1,4 @@
+## Append samples of your project ##
+resources:
+- charts.nginx.org_v1alpha1_nginxingress.yaml
+#+kubebuilder:scaffold:manifestskustomizesamples
