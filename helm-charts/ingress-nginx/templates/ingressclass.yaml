@@ -5,4 +5,4 @@ metadata:
   labels:
     {{- include "ingress-nginx.labels" . | nindent 4 }}
 spec:
-  controller: {{ .Release.Namespace }}/{{ include "ingress-nginx.name" . }}
+  controller: "k8s.io/ingress-nginx"

@@ -24,7 +24,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: ingress-nginx-admission
+  name: {{ include "ingress-nginx.name" . }}-admission
 subjects:
   - kind: ServiceAccount
     name: {{ include "ingress-nginx.name" . }}-admission

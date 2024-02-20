@@ -19,9 +19,9 @@ spec:
           imagePullPolicy: IfNotPresent
           args:
             - create
-            - --host=ingress-nginx-controller-admission,ingress-nginx-controller-admission.$(POD_NAMESPACE).svc
+            - --host=ingress-nginx-controller-admission,{{ include "ingress-nginx.name" . }}-admission.$(POD_NAMESPACE).svc
             - --namespace=$(POD_NAMESPACE)
-            - --secret-name=ingress-nginx-admission
+            - --secret-name={{ include "ingress-nginx.name" . }}-admission
           env:
             - name: POD_NAMESPACE
               valueFrom:
@@ -56,10 +56,10 @@ spec:
           imagePullPolicy: IfNotPresent
           args:
             - patch
-            - --webhook-name=ingress-nginx-admission
+            - --webhook-name={{ include "ingress-nginx.name" . }}-admission
             - --namespace=$(POD_NAMESPACE)
             - --patch-mutating=false
-            - --secret-name=ingress-nginx-admission
+            - --secret-name={{ include "ingress-nginx.name" . }}-admission
             - --patch-failure-policy=Fail
           env:
             - name: POD_NAMESPACE
@@ -67,7 +67,7 @@ spec:
                 fieldRef:
                   fieldPath: metadata.namespace
       restartPolicy: OnFailure
-      serviceAccountName: ingress-nginx-admission
+      serviceAccountName: {{ include "ingress-nginx.name" . }}-admission
       nodeSelector:
         kubernetes.io/os: linux
       securityContext:
