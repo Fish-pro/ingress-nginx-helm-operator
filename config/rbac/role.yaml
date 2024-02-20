@@ -55,15 +55,21 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "networking.k8s.io"
-  resources:
-  - "ingressclasses"
-- verbs:
-  - "*"
-  apiGroups:
   - "admissionregistration.k8s.io"
   resources:
   - "validatingwebhookconfigurations"
+- verbs:
+  - "*"
+  apiGroups:
+  - "apps"
+  resources:
+  - "deployments"
+- verbs:
+  - "*"
+  apiGroups:
+  - "batch"
+  resources:
+  - "jobs"
 - verbs:
   - "*"
   apiGroups:
@@ -79,11 +85,5 @@ rules:
   resources:
   - "rolebindings"
   - "roles"
-- verbs:
-  - "*"
-  apiGroups:
-  - "apps"
-  resources:
-  - "deployments"
 
 #+kubebuilder:scaffold:rules

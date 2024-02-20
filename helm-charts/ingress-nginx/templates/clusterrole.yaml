@@ -1,59 +1,29 @@
-{{- if .Values.rbac.create }}
-
-{{- if and .Values.rbac.scope (not .Values.controller.scope.enabled) -}}
-  {{ required "Invalid configuration: 'rbac.scope' should be equal to 'controller.scope.enabled' (true/false)." (index (dict) ".") }}
-{{- end }}
-
-{{- if not .Values.rbac.scope -}}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   labels:
     {{- include "ingress-nginx.labels" . | nindent 4 }}
-    {{- with .Values.controller.labels }}
-    {{- toYaml . | nindent 4 }}
-    {{- end }}
-  name: {{ include "ingress-nginx.fullname" . }}
+  name: {{ include "ingress-nginx.name" . }}
 rules:
   - apiGroups:
-      - ""
+      - ''
     resources:
       - configmaps
       - endpoints
       - nodes
       - pods
       - secrets
-{{- if not .Values.controller.scope.enabled }}
-      - namespaces
-{{- end}}
     verbs:
       - list
       - watch
   - apiGroups:
-      - coordination.k8s.io
-    resources:
-      - leases
-    verbs:
-      - list
-      - watch
-{{- if and .Values.controller.scope.enabled .Values.controller.scope.namespace }}
-  - apiGroups:
-      - ""
-    resources:
-      - namespaces
-    resourceNames:
-      - "{{ .Values.controller.scope.namespace }}"
-    verbs:
-      - get
-{{- end }}
-  - apiGroups:
-      - ""
+      - ''
     resources:
       - nodes
     verbs:
       - get
   - apiGroups:
-      - ""
+      - ''
     resources:
       - services
     verbs:
@@ -61,7 +31,8 @@ rules:
       - list
       - watch
   - apiGroups:
-      - networking.k8s.io
+      - extensions
+      - networking.k8s.io   # k8s 1.14+
     resources:
       - ingresses
     verbs:
@@ -69,34 +40,39 @@ rules:
       - list
       - watch
   - apiGroups:
-      - ""
+      - ''
     resources:
       - events
     verbs:
       - create
       - patch
   - apiGroups:
-      - networking.k8s.io
+      - extensions
+      - networking.k8s.io   # k8s 1.14+
     resources:
       - ingresses/status
     verbs:
       - update
   - apiGroups:
-      - networking.k8s.io
+      - networking.k8s.io   # k8s 1.14+
     resources:
       - ingressclasses
     verbs:
       - get
       - list
       - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "ingress-nginx.name" . }}-admission
+  labels:
+    {{- include "ingress-nginx.labels" . | nindent 4 }}
+rules:
   - apiGroups:
-      - discovery.k8s.io
+      - admissionregistration.k8s.io
     resources:
-      - endpointslices
+      - validatingwebhookconfigurations
     verbs:
-      - list
-      - watch
       - get
-{{- end }}
-
-{{- end }}
+      - update
