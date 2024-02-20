@@ -22,8 +22,8 @@ podSecurityContext: {}
 service:
   type: NodePort
   nodePorts:
-    http: "30080"
-    https: "30443"
+    http: "30077"
+    https: "30088"
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
