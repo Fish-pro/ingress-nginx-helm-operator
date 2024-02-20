@@ -67,6 +67,12 @@ rules:
 - verbs:
   - "*"
   apiGroups:
+  - "batch"
+  resources:
+  - "jobs"
+- verbs:
+  - "*"
+  apiGroups:
   - ""
   resources:
   - "configmaps"
@@ -85,11 +91,5 @@ rules:
   - "apps"
   resources:
   - "deployments"
-- verbs:
-  - "*"
-  apiGroups:
-  - "batch"
-  resources:
-  - "jobs"
 
 #+kubebuilder:scaffold:rules

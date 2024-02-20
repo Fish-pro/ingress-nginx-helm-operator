@@ -7,18 +7,15 @@ metadata:
     {{- include "ingress-nginx.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
-  externalTrafficPolicy: Local
   ports:
     - name: http
       port: 80
       protocol: TCP
       targetPort: http
-      nodePort: {{ .Values.service.nodePorts.http }}
     - name: https
       port: 443
       protocol: TCP
       targetPort: https
-      nodePort: {{ .Values.service.nodePorts.https }}
   selector:
     {{- include "ingress-nginx.selectorLabels" . | nindent 4 }}
 

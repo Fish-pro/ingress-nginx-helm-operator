@@ -10,8 +10,6 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: "v0.49.3"
 
-ingressClass: "ingress1"
-
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
@@ -22,10 +20,7 @@ podSecurityContext: {}
   # fsGroup: 2000
 
 service:
-  type: NodePort
-  nodePorts:
-    http: "30077"
-    https: "30088"
+  type: ClusterIP
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

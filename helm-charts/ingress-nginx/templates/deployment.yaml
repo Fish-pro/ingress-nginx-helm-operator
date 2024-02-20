@@ -33,7 +33,7 @@ spec:
             - /nginx-ingress-controller
             - --publish-service=$(POD_NAMESPACE)/{{ .Release.Name }}-controller
             - --election-id=ingress-controller-leader
-            - --ingress-class={{ .Values.ingressClass }}
+            - --ingress-class={{ .Release.Name }}
             - --configmap=$(POD_NAMESPACE)/{{ .Release.Name }}-controller
             - --validating-webhook=:8443
             - --validating-webhook-certificate=/usr/local/certificates/cert
