@@ -1,7 +1,7 @@
 apiVersion: charts.nginx.org.nginx.io/v1alpha1
 kind: NginxIngress
 metadata:
-  name: nginxingress-sample
+  name: demo
 spec:
   # Default values copied from <project_dir>/helm-charts/ingress-nginx/values.yaml
   affinity: {}
