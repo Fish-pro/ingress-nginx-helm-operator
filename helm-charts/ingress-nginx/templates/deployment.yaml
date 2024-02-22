@@ -91,12 +91,19 @@ spec:
             - name: webhook-cert
               mountPath: /usr/local/certificates/
               readOnly: true
+            - name: log-dir
+              mountPath: /var/log/nginx/
+              readOnly: false
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
         - name: webhook-cert
           secret:
             secretName: {{ .Release.Name }}-admission
+        - name: log-dir
+          hostPath:
+            path: /var/log/nginx/
+            type: Directory
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
