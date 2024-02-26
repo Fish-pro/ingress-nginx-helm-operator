@@ -105,6 +105,53 @@ nginx   k8s.io/ingress-nginx   <none>       60s
 
 At this point, ingress-nginx has been installed
 
+### 4. Test for access
+
+Create an nginx application, use ingress, and test whether it can be accessed
+
+```shell
+➜  ~ kubectl create deployment my-dep --image=nginx --replicas=1
+deployment.apps/my-dep created
+➜  ~ kubectl wait --for=condition=Ready pods -l  app=my-dep
+pod/my-dep-5b7868d854-5ncp6 condition met
+➜  ~ kubectl expose deploy/my-dep --port=8080 --target-port=80
+service/my-dep exposed
+➜  ~ kubectl create ingress demo --class=nginx --rule="foo.com/*=my-dep:8080"
+ingress.networking.k8s.io/demo created
+➜  ~ kubectl -n ingress-nginx port-forward svc/nginxingress-sample-controller 8080:80
+Forwarding from 127.0.0.1:8080 -> 80
+Forwarding from [::1]:8080 -> 80
+Handling connection for 8080
+```
+
+Open a new control terminal or use a browser to access it
+
+```shell
+➜  ~ curl --header "Host: foo.com" http://localhost:8080
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+html { color-scheme: light dark; }
+body { width: 35em; margin: 0 auto;
+font-family: Tahoma, Verdana, Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+```
 
 ## What's Next
 
