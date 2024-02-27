@@ -5,6 +5,16 @@ metadata:
 spec:
   # Default values copied from <project_dir>/helm-charts/ingress-nginx/values.yaml
   affinity: {}
+  configmap:
+    access-log-path: /var/log/nginx/access.log
+    allow-snippet-annotations: "true"
+    error-log-path: /var/log/nginx/error.log
+    proxy-connect-timeout: "5"
+    proxy-read-timeout: "60"
+    proxy-send-timeout: "60"
+    upstream-keepalive-connections: "320"
+    upstream-keepalive-requests: "1000"
+    upstream-keepalive-timeout: "15"
   fullnameOverride: ""
   image:
     pullPolicy: IfNotPresent
